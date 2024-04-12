@@ -53,13 +53,8 @@ class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
         self.tank = Tank1(self)
-        self.NUM_BULLETS = 100
-        self.currentBullet = 0
-        self.bullets = []
-        for i in range(self.NUM_BULLETS):
-            self.bullets.append(Bullet(self, self.tank))
-                                
-        self.sprites = [self.tank, self.bullets]
+        self.bullet = Bullet(self, self.tank)
+        self.sprites = [self.tank, self.bullet]
 
     def processEvent(self, event):
         if event.type == pygame.KEYDOWN:
