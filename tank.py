@@ -31,7 +31,7 @@ class Game(simpleGE.Scene):
         super().__init__()
         self.tank = Tank1(self)
         
-        self.sprites [self.tank]
+        self.sprites = [self.tank]
         
 def main():
     game = Game()
