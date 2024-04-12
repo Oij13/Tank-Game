@@ -39,10 +39,11 @@ class Bullet(simpleGE.Sprite):
         self.hide()
 
     def fire(self):
-        self.show()
-        self.position = self.parent.position
-        self.moveAngle = self.parent.imageAngle
-        self.speed = 20
+        if not self.visible:
+            self.show()
+            self.position = self.parent.position
+            self.moveAngle = self.parent.imageAngle
+            self.speed = 20
 
     
 
@@ -61,13 +62,9 @@ class Game(simpleGE.Scene):
         self.sprites = [self.tank, self.bullets]
 
     def processEvent(self, event):
-        super().processEvent(event)
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_f:
-                self.currentBullet += 1
-                if self.currentBullet >= self.NUM_BULLETS:
-                    self.currentBullet = 0
-                self.bullets[self.currentBullet].fire()
+            if event.key == pygame.K_SPACE:
+                self.bullet.fire()        
         
         
         
