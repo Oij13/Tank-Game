@@ -16,6 +16,7 @@ class Tank1(simpleGE.Sprite):
         self.setSize(40,40)
         self.position = (75,250)
         
+        
     
     def process(self):
         if self.isKeyPressed(pygame.K_a):
@@ -26,6 +27,38 @@ class Tank1(simpleGE.Sprite):
             self.forward(3)
         if self.isKeyPressed(pygame.K_s):
             self.forward(-3)
+            
+        barriers = self.scene.barriers
+        angle = self.moveAngle % 360
+        if angle <= 45:
+            dir = "right"
+        elif angle <= 135:
+            dir = "up"
+        elif angle <= 225:
+            dir = "left"
+        elif angle <= 315:
+            dir = "down"
+        else:
+            dir = "right"
+            
+        
+        if self.collidesWith(barriers):
+            if dir == "right":
+                if self.right > barriers.left:
+                    self.right = barriers.left
+                    self.speed = 0
+            if dir == "left":
+                if self.left < barriers.right:
+                    self.left = barriers.right
+                    self.speed = 0
+            if dir == "down":
+                if self.bottom > barriers.top:
+                    self.bottom = barriers.top
+                    self.speed = 0
+            if dir == "up":
+                if self.top < barriers.bottom:
+                    self.top = barriers.bottom
+                    self.speed = 0
 
 
 
@@ -48,6 +81,38 @@ class Tank2(simpleGE.Sprite):
             self.forward(-3)
         if self.isKeyPressed(pygame.K_k):
             self.forward(3)
+            
+        barriers = self.scene.barriers
+        angle = self.moveAngle % 360
+        if angle < 45:
+            dir = "right"
+        elif angle < 135:
+            dir = "up"
+        elif angle < 225:
+            dir = "left"
+        elif angle < 315:
+            dir = "down"
+        else:
+            dir = "right"
+            
+        
+        if self.collidesWith(barriers):
+            if dir == "right":
+                if self.right > barriers.left:
+                    self.right = barriers.left
+                    self.speed = 0
+            if dir == "left":
+                if self.left < barriers.right:
+                    self.left = barriers.right
+                    self.speed = 0
+            if dir == "down":
+                if self.bottom > barriers.top:
+                    self.bottom = barriers.top
+                    self.speed = 0
+            if dir == "up":
+                if self.top < barriers.bottom:
+                    self.top = barriers.bottom
+                    self.speed = 0
 
 
 class Bullet1(simpleGE.Sprite):
@@ -94,7 +159,9 @@ class Game(simpleGE.Scene):
         self.tank2 = Tank2(self)
         self.bullet2 = Bullet2(self, self.tank2)
         
-        self.barriers = [Barrier(self, (25, 455)),
+        self.barriers = Barrier(self, (350, 350))
+        
+        """self.barriers = [Barrier(self, (25, 455)),
                          Barrier(self, (25, 25)),
                          Barrier(self, (75, 455)),
                          Barrier(self, (75, 25)),
@@ -136,8 +203,21 @@ class Game(simpleGE.Scene):
                          Barrier(self, (25, 375)),
                          Barrier(self, (615, 375)),
                          Barrier(self, (25, 425)),
-                         Barrier(self, (615, 425))
-                         ]
+                         Barrier(self, (615, 425)),
+                         
+                         Barrier(self, (200, 125)),
+                         Barrier(self, (200, 175)),
+                         Barrier(self, (200, 75)),
+                         Barrier(self, (250, 175)),
+                         Barrier(self, (450, 405)),
+                         Barrier(self, (450, 355)),
+                         Barrier(self, (450, 305)),
+                         Barrier(self, (400, 305)),
+                         Barrier(self, (200, 305)),
+                         Barrier(self, (450, 175)),
+
+                         
+                         ]"""
 
         self.sprites = [self.tank1, self.bullet1, self.tank2, self.bullet2, self.barriers]
         
