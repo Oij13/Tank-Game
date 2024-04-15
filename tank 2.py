@@ -27,38 +27,59 @@ class Tank1(simpleGE.Sprite):
             self.forward(3)
         if self.isKeyPressed(pygame.K_s):
             self.forward(-3)
+        
+
+        
+
             
         for barrier in self.scene.barriers:
+                       
             angle = self.moveAngle % 360
-            if angle <= 45:
+            if angle < 90 and angle > -90 :
                 dir = "right"
-            elif angle <= 135:
+            elif angle < 180 and angle > 0:
                 dir = "up"
-            elif angle <= 225:
+            elif angle < 270 and angle > 90:
                 dir = "left"
-            elif angle <= 315:
+            elif angle < 360 and angle >180:
                 dir = "down"
             else:
                 dir = "right"
-            
         
-            if self.collidesWith(barrier):
-                if dir == "right":
+            if self.collidesWith(self.barrier.color("yellow")):
+                if dir == "right" and self.isKeyPressed(pygame.K_w):
                     if self.right > barrier.left:
-                        self.right = barrier.left
+                        self.right = barrier.left  
+                        self.speed = 0
+                if dir == "right" and self.isKeyPressed(pygame.K_s):
+                    if self.left < barrier.right:
+                        self.left = barrier.right  
                         self.speed = 0
                 if dir == "left":
                     if self.left < barrier.right:
-                        self.left = barrier.right
-                        self.speed = 0
+                        self.left = barrier.right 
+                        self.speed = 0    
+                if dir == "left":
+                    if self.right > barrier.left:
+                        self.right = barrier.left 
+                        self.speed = 0    
                 if dir == "down":
                     if self.bottom > barrier.top:
-                        self.bottom = barrier.top
+                        self.bottom = barrier.top 
+                        self.speed = 0
+                if dir == "down":
+                    if self.top < barrier.bottom:
+                        self.top = barrier.bottom 
                         self.speed = 0
                 if dir == "up":
                     if self.top < barrier.bottom:
-                        self.top = barrier.bottom
+                        self.top = barrier.bottom 
                         self.speed = 0
+                if dir == "up":
+                    if self.bottom > barrier.top:
+                        self.bottom = barrier.top 
+                        self.speed = 0
+
 
 
 
@@ -186,6 +207,10 @@ class Game(simpleGE.Scene):
             newBarrier.x = 615
             self.barriers.append(newBarrier)
         #self.barriers.append(Barrier(self, (625, 455)))
+        newBarrier = Barrier(self)
+        newBarrier.y = 455
+        newBarrier.x = 615
+        self.barriers.append(newBarrier)
     
         
         
