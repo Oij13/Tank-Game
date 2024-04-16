@@ -9,7 +9,7 @@ Created on Fri Apr 12 10:33:38 2024
 
 import pygame, simpleGE
 
-class Tank1(simpleGE.Sprite):
+class Tank(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.setImage("Tank.png")
@@ -17,19 +17,8 @@ class Tank1(simpleGE.Sprite):
         self.position = (75,250)
         
         
-    
-    def process(self):
-        if self.isKeyPressed(pygame.K_a):
-            self.turnBy(3)
-        if self.isKeyPressed(pygame.K_d):
-            self.turnBy(-3)
-        if self.isKeyPressed(pygame.K_w):
-            self.forward(3)
-        if self.isKeyPressed(pygame.K_s):
-            self.forward(-3)
-        
 
-        
+    def process(self):   
 
             
         for barrier in self.scene.barriers:
@@ -46,12 +35,12 @@ class Tank1(simpleGE.Sprite):
             else:
                 dir = "right"
         
-            if self.collidesWith(self.barrier.color("yellow")):
-                if dir == "right" and self.isKeyPressed(pygame.K_w):
+            if self.collidesWith(barrier):
+                if dir == "right":
                     if self.right > barrier.left:
                         self.right = barrier.left  
                         self.speed = 0
-                if dir == "right" and self.isKeyPressed(pygame.K_s):
+                if dir == "right":
                     if self.left < barrier.right:
                         self.left = barrier.right  
                         self.speed = 0
@@ -85,7 +74,7 @@ class Tank1(simpleGE.Sprite):
 
 
 
-class Tank2(simpleGE.Sprite):
+"""class Tank2(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.setImage("Redtank.png")
@@ -133,11 +122,11 @@ class Tank2(simpleGE.Sprite):
                 if dir == "up":
                     if self.top < barrier.bottom:
                         self.top = barrier.bottom
-                        self.speed = 0
+                        self.speed = 0"""
 
 
 
-class Bullet1(simpleGE.Sprite):
+class Bullet(simpleGE.Sprite):
     def __init__(self, scene, parent):
         super().__init__(scene)
         self.parent = parent
@@ -155,35 +144,40 @@ class Bullet1(simpleGE.Sprite):
     def process(self):
         for barrier in self.scene.barriers:
             if self.collidesWith(barrier):
-                self.hide()
-
+                self.reset()
     
-class Bullet2(simpleGE.Sprite):
-    def __init__(self, scene, parent):
-        super().__init__(scene)
-        self.parent = parent
-        self.setImage("Bullet.png")
-        self.setSize(5,5)
-        self.setBoundAction(self.HIDE)
+    def reset(self):
+        self.dx = 0
+        self.dy = 0
         self.hide()
 
-    def fire(self):
-        if not self.visible:
-            self.show()
-            self.position = self.parent.position
-            self.moveAngle = self.parent.imageAngle
-            self.speed = -20
 
+
+class LblScore(simpleGE.Label):
+    def __init__(self):
+        super().__init__()
+        self.text = "Score: 0"
+        self.center = (100, 30)
+        
+        
+        
+        
 
 class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
         
-        self.tank1 = Tank1(self)
-        self.bullet1 = Bullet1(self, self.tank1)
+        self.tank1 = Tank(self)
+        self.bullet1 = Bullet(self, self.tank1)
         self.setImage("RockBG.png")
-        self.tank2 = Tank2(self)
-        self.bullet2 = Bullet2(self, self.tank2)
+        self.tank2 = Tank(self)
+        self.tank2.setAngle(180)
+        self.tank2.setImage("Redtank.png")
+        self.tank2.position = (565,250)
+        self.score = 0
+        self.lblScore = LblScore()
+        self.tank2.setSize(40, 40)
+        self.bullet2 = Bullet(self, self.tank2)
         
         self.barriers = []
         for i in range(13):
@@ -206,71 +200,11 @@ class Game(simpleGE.Scene):
             newBarrier.y = i * 50
             newBarrier.x = 615
             self.barriers.append(newBarrier)
-        #self.barriers.append(Barrier(self, (625, 455)))
         newBarrier = Barrier(self)
         newBarrier.y = 455
         newBarrier.x = 615
         self.barriers.append(newBarrier)
     
-        
-        
-        """self.barriers = [Barrier(self, (25, 455)),
-                         Barrier(self, (25, 25)),
-                         Barrier(self, (75, 455)),
-                         Barrier(self, (75, 25)),
-                         Barrier(self, (125, 455)),
-                         Barrier(self, (125, 25)),
-                         Barrier(self, (175, 455)),
-                         Barrier(self, (175, 25)),
-                         Barrier(self, (225, 25)),
-                         Barrier(self, (225, 455)),
-                         Barrier(self, (275, 25)),
-                         Barrier(self, (275, 455)),
-                         Barrier(self, (325, 25)),
-                         Barrier(self, (325, 455)),
-                         Barrier(self, (375, 25)),
-                         Barrier(self, (375, 455)),
-                         Barrier(self, (425, 25)),
-                         Barrier(self, (425, 455)),
-                         Barrier(self, (475, 25)),
-                         Barrier(self, (475, 455)),
-                         Barrier(self, (525, 25)),
-                         Barrier(self, (525, 455)),
-                         Barrier(self, (575, 25)),
-                         Barrier(self, (575, 455)),
-                         Barrier(self, (625, 25)),
-                         Barrier(self, (625, 455)),
-                         
-                         Barrier(self, (25, 75)),
-                         Barrier(self, (615, 75)),
-                         Barrier(self, (25, 125)),
-                         Barrier(self, (615, 125)),
-                         Barrier(self, (25, 175)),
-                         Barrier(self, (615, 175)),
-                         Barrier(self, (25, 225)),
-                         Barrier(self, (615, 225)),
-                         Barrier(self, (25, 275)),
-                         Barrier(self, (615, 275)),
-                         Barrier(self, (25, 325)),
-                         Barrier(self, (615, 325)),
-                         Barrier(self, (25, 375)),
-                         Barrier(self, (615, 375)),
-                         Barrier(self, (25, 425)),
-                         Barrier(self, (615, 425)),
-                         
-                         Barrier(self, (200, 125)),
-                         Barrier(self, (200, 175)),
-                         Barrier(self, (200, 75)),
-                         Barrier(self, (250, 175)),
-                         Barrier(self, (450, 405)),
-                         Barrier(self, (450, 355)),
-                         Barrier(self, (450, 305)),
-                         Barrier(self, (400, 305)),
-                         Barrier(self, (200, 305)),
-                         Barrier(self, (450, 175)),
-
-                         
-                         ]"""
 
         self.sprites = [self.tank1, self.bullet1, self.tank2, self.bullet2, self.barriers]
         
@@ -283,9 +217,31 @@ class Game(simpleGE.Scene):
             if event.key == pygame.K_h:
                 self.bullet2.fire()    
         
-    
+    def process(self):
+        if self.tank2.isKeyPressed(pygame.K_j):
+            self.tank2.turnBy(3)
+        if self.tank2.isKeyPressed(pygame.K_l):
+            self.tank2.turnBy(-3)
+        if self.tank2.isKeyPressed(pygame.K_i):
+            self.tank2.forward(3)
+        if self.tank2.isKeyPressed(pygame.K_k):
+            self.tank2.forward(-3)
+            
+        if self.tank1.isKeyPressed(pygame.K_a):
+            self.tank1.turnBy(3)
+        if self.tank1.isKeyPressed(pygame.K_d):
+            self.tank1.turnBy(-3)
+        if self.tank1.isKeyPressed(pygame.K_w):
+            self.tank1.forward(3)
+        if self.tank1.isKeyPressed(pygame.K_s):
+            self.tank1.forward(-3)
+        
 
-
+        if self.bullet1.collidesWith(self.tank2):
+            self.bullet1.show()
+            self.score += 1
+            self.bullet1.hide
+            self.lblScore.text = f"Score: {self.score}"
 
 class Barrier(simpleGE.Sprite):
     def __init__(self, scene):
