@@ -9,34 +9,77 @@ Created on Fri Apr 12 10:33:38 2024
 
 import pygame, simpleGE
 
-class Tank1(simpleGE.Sprite):
+class Tank(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.setImage("Tank.png")
         self.setSize(40,40)
-        self.position = (60,250)
+        self.position = (75,250)
         
-    
-    def process(self):
-        if self.isKeyPressed(pygame.K_a):
-            self.turnBy(3)
-        if self.isKeyPressed(pygame.K_d):
-            self.turnBy(-3)
-        if self.isKeyPressed(pygame.K_w):
-            self.forward(3)
-        if self.isKeyPressed(pygame.K_s):
-            self.forward(-3)
+        
+
+    def process(self):   
+
+            
+        for barrier in self.scene.barriers:
+                       
+            angle = self.moveAngle % 360
+            if angle < 90 and angle > -90 :
+                dir = "right"
+            elif angle < 180 and angle > 0:
+                dir = "up"
+            elif angle < 270 and angle > 90:
+                dir = "left"
+            elif angle < 360 and angle >180:
+                dir = "down"
+            else:
+                dir = "right"
+        
+            if self.collidesWith(barrier):
+                if dir == "right":
+                    if self.right > barrier.left:
+                        self.right = barrier.left  
+                        self.speed = 0
+                if dir == "right":
+                    if self.left < barrier.right:
+                        self.left = barrier.right  
+                        self.speed = 0
+                if dir == "left":
+                    if self.left < barrier.right:
+                        self.left = barrier.right 
+                        self.speed = 0    
+                if dir == "left":
+                    if self.right > barrier.left:
+                        self.right = barrier.left 
+                        self.speed = 0    
+                if dir == "down":
+                    if self.bottom > barrier.top:
+                        self.bottom = barrier.top 
+                        self.speed = 0
+                if dir == "down":
+                    if self.top < barrier.bottom:
+                        self.top = barrier.bottom 
+                        self.speed = 0
+                if dir == "up":
+                    if self.top < barrier.bottom:
+                        self.top = barrier.bottom 
+                        self.speed = 0
+                if dir == "up":
+                    if self.bottom > barrier.top:
+                        self.bottom = barrier.top 
+                        self.speed = 0
 
 
 
 
 
-class Tank2(simpleGE.Sprite):
+
+"""class Tank2(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
         self.setImage("Redtank.png")
         self.setSize(40,40)
-        self.position = (560,250)
+        self.position = (565,250)
         
     
     def process(self):
@@ -48,9 +91,42 @@ class Tank2(simpleGE.Sprite):
             self.forward(-3)
         if self.isKeyPressed(pygame.K_k):
             self.forward(3)
+            
+        for barrier in self.scene.barriers:
+            angle = self.moveAngle % 360
+            if angle <= 45:
+                dir = "right"
+            elif angle <= 135:
+                dir = "up"
+            elif angle <= 225:
+                dir = "left"
+            elif angle <= 315:
+                dir = "down"
+            else:
+                dir = "right"
+            
+        
+            if self.collidesWith(barrier):
+                if dir == "right":
+                    if self.right > barrier.left:
+                        self.right = barrier.left
+                        self.speed = 0
+                if dir == "left":
+                    if self.left < barrier.right:
+                        self.left = barrier.right
+                        self.speed = 0
+                if dir == "down":
+                    if self.bottom > barrier.top:
+                        self.bottom = barrier.top
+                        self.speed = 0
+                if dir == "up":
+                    if self.top < barrier.bottom:
+                        self.top = barrier.bottom
+                        self.speed = 0"""
 
 
-class Bullet1(simpleGE.Sprite):
+
+class Bullet(simpleGE.Sprite):
     def __init__(self, scene, parent):
         super().__init__(scene)
         self.parent = parent
@@ -65,39 +141,81 @@ class Bullet1(simpleGE.Sprite):
             self.position = self.parent.position
             self.moveAngle = self.parent.imageAngle
             self.speed = 20
-
+    def process(self):
+        for barrier in self.scene.barriers:
+            if self.collidesWith(barrier):
+                self.reset()
     
-class Bullet2(simpleGE.Sprite):
-    def __init__(self, scene, parent):
-        super().__init__(scene)
-        self.parent = parent
-        self.setImage("Bullet.png")
-        self.setSize(5,5)
-        self.setBoundAction(self.HIDE)
+    def reset(self):
+        self.dx = 0
+        self.dy = 0
         self.hide()
 
-    def fire(self):
-        if not self.visible:
-            self.show()
-            self.position = self.parent.position
-            self.moveAngle = self.parent.imageAngle
-            self.speed = -20
 
+
+class LblScore(simpleGE.Label):
+    def __init__(self):
+        super().__init__()
+        self.text = "Score: 0"
+        self.center = (100, 30)
+        
+        
+        
+        
 
 class Game(simpleGE.Scene):
     def __init__(self):
         super().__init__()
         
-        self.tank1 = Tank1(self)
-        self.bullet1 = Bullet1(self, self.tank1)
-        self.setImage("RockBG.png")
-        self.tank2 = Tank2(self)
-        self.bullet2 = Bullet2(self, self.tank2)
+        self.tank1 = Tank(self)
+        self.bullet1 = Bullet(self, self.tank1)
+        self.tank1.score = 0
+        self.tank1.lblScore = LblScore()
         
-        self.barriers = [Barrier(self, (325, 470)),
-                         Barrier(self, (325, 10))]
+        self.setImage("RockBG.png")
+        
+        self.tank2 = Tank(self)
+        self.tank2.setAngle(180)
+        self.tank2.setImage("Redtank.png")
+        self.tank2.position = (565,250)
+        self.tank2.score = 0
+        self.tank2.lblScore = LblScore()
+        self.tank2.lblScore.center = (400, 30)
+        self.tank2.setSize(40, 40)
+        self.bullet2 = Bullet(self, self.tank2)
+        
+        self.barriers = []
+        for i in range(13):
+            newWall = Barrier(self)
+            newWall.y = 25
+            newWall.x = i * 50
+            self.barriers.append(newWall)
+        for i in range(13):
+            newBarrier = Barrier(self)
+            newBarrier.y = 455
+            newBarrier.x = i * 50
+            self.barriers.append(newBarrier)
+        for i in range(13):
+            newBarrier = Barrier(self)
+            newBarrier.y = i * 50
+            newBarrier.x = 25
+            self.barriers.append(newBarrier)
+        for i in range(13):
+            newBarrier = Barrier(self)
+            newBarrier.y = i * 50
+            newBarrier.x = 615
+            self.barriers.append(newBarrier)
+        newBarrier = Barrier(self)
+        newBarrier.y = 455
+        newBarrier.x = 615
+        self.barriers.append(newBarrier)
+    
 
-        self.sprites = [self.tank1, self.bullet1, self.tank2, self.bullet2, self.barriers]
+        self.sprites = [
+            self.tank1, self.bullet1, self.tank2, 
+            self.bullet2, self.barriers, self.tank1.lblScore, 
+            self.tank2.lblScore
+            ]
         
         
     def processEvent(self, event):
@@ -108,15 +226,44 @@ class Game(simpleGE.Scene):
             if event.key == pygame.K_h:
                 self.bullet2.fire()    
         
-    
+    def process(self):
+        if self.tank2.isKeyPressed(pygame.K_j):
+            self.tank2.turnBy(3)
+        if self.tank2.isKeyPressed(pygame.K_l):
+            self.tank2.turnBy(-3)
+        if self.tank2.isKeyPressed(pygame.K_i):
+            self.tank2.forward(3)
+        if self.tank2.isKeyPressed(pygame.K_k):
+            self.tank2.forward(-3)
+            
+        if self.tank1.isKeyPressed(pygame.K_a):
+            self.tank1.turnBy(3)
+        if self.tank1.isKeyPressed(pygame.K_d):
+            self.tank1.turnBy(-3)
+        if self.tank1.isKeyPressed(pygame.K_w):
+            self.tank1.forward(3)
+        if self.tank1.isKeyPressed(pygame.K_s):
+            self.tank1.forward(-3)
+        
 
+        if self.bullet1.collidesWith(self.tank2):
+            self.bullet1.show()
+            self.tank1.score += 1
+            self.bullet1.hide
+            self.tank1.lblScore.text = f"Score: {self.tank1.score}"
+
+
+        if self.bullet2.collidesWith(self.tank1):
+            self.bullet2.show()
+            self.tank2.score += 1
+            self.bullet2.hide
+            self.tank2.lblScore.text = f"Score: {self.tank2.score}"
 
 
 class Barrier(simpleGE.Sprite):
-    def __init__(self, scene, position):
+    def __init__(self, scene):
         super().__init__(scene)
-        self.position = (position)
-        self.colorRect("yellow", (650, 25))
+        self.colorRect("yellow", (50, 50))
         
 
 
