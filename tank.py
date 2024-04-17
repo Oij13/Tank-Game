@@ -70,6 +70,17 @@ class Bullet1(simpleGE.Sprite):
         for barrier in self.scene.barriersT:
             if self.collidesWith(barrier):
                 self.reset()
+        for barrier in self.scene.barriersB:
+            if self.collidesWith(barrier):
+                self.reset()
+        for barrier in self.scene.barriersR:
+            if self.collidesWith(barrier):
+                self.reset()
+        for barrier in self.scene.barriersL:
+            if self.collidesWith(barrier):
+                self.reset()
+
+
     
     def reset(self):
         self.dx = 0
@@ -96,7 +107,16 @@ class Bullet2(simpleGE.Sprite):
         for barrier in self.scene.barriersT:
             if self.collidesWith(barrier):
                 self.reset()
-    
+        for barrier in self.scene.barriersB:
+            if self.collidesWith(barrier):
+                self.reset()
+        for barrier in self.scene.barriersR:
+            if self.collidesWith(barrier):
+                self.reset()
+        for barrier in self.scene.barriersL:
+            if self.collidesWith(barrier):
+                self.reset()
+
     def reset(self):
         self.dx = 0
         self.dy = 0
