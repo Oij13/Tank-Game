@@ -21,54 +21,34 @@ class Tank(simpleGE.Sprite):
     def process(self):   
 
             
-        for barrier in self.scene.barriers:
-                       
-            angle = self.moveAngle % 360
-            if angle < 45:
-                dir = "right"
-            elif angle < 135:
-                dir = "up"
-            elif angle < 225:
-                dir = "left"
-            elif angle < 315:
-                dir = "down"
-            else:
-                dir = "right"
-                
- 
+        for barrier in self.scene.barriersR:
         
             if self.collidesWith(barrier):
-                if dir == "right"  :
-                    if self.right > barrier.left:
-                        self.right = barrier.left  
-                        self.speed = 0
-
-                if dir == "left":
-                    if self.left < barrier.right:
-                        self.left = barrier.right 
-                        self.speed = 0    
-
-                if dir == "down":
-                    if self.bottom > barrier.top:
-                        self.bottom = barrier.top 
-                        self.speed = 0
-                if dir == "up":
-                    if self.top < barrier.bottom:
-                        self.top = barrier.bottom 
-                        self.speed = 0
-
-        self.scene.lblOut.text = f"m: {self.moveAngle}, i: {self.imageAngle}"
-
-
-class LblOut(simpleGE.Label):
-  def __init__(self):
-        super().__init__()
-        self.center = (320, 30)
-        self.size = (200, 30)
-        self.fgColor = "blue"
-        self.bgColor = "white"
-        self.clearBack = True\
+                if self.right > barrier.left :
+                    self.right = barrier.left  
+                    self.speed = 0
+        
+        for barrier in self.scene.barriersL:
             
+            if self.collidesWith(barrier):
+                if self.left < barrier.right:
+                    self.left = barrier.right
+                    self.speed = 0
+        
+        for barrier in self.scene.barriersT:
+            
+            if self.collidesWith(barrier):
+                if self.top < barrier.bottom:
+                    self.top = barrier.bottom
+                    self.speed = 0
+        
+        for barrier in self.scene.barriersB:
+            
+            if self.collidesWith(barrier):
+                if self.bottom > barrier.top:
+                    self.bottom = barrier.top
+                    self.speed = 0
+
 
 
 class Bullet1(simpleGE.Sprite):
@@ -87,7 +67,7 @@ class Bullet1(simpleGE.Sprite):
             self.moveAngle = self.parent.imageAngle
             self.speed = 20
     def process(self):
-        for barrier in self.scene.barriers:
+        for barrier in self.scene.barriersT:
             if self.collidesWith(barrier):
                 self.reset()
     
@@ -113,7 +93,7 @@ class Bullet2(simpleGE.Sprite):
             self.moveAngle = self.parent.imageAngle
             self.speed = -20
     def process(self):
-        for barrier in self.scene.barriers:
+        for barrier in self.scene.barriersT:
             if self.collidesWith(barrier):
                 self.reset()
     
@@ -157,38 +137,73 @@ class Game(simpleGE.Scene):
         self.bullet2 = Bullet2(self, self.tank2)
         self.bullet2.speed = -20
         
-        self.barriers = []
-        """for i in range(13):
+        self.barriersL = []
+        self.barriersR = []
+        self.barriersT = []
+        self.barriersB = []
+        for i in range(65):
             newBarrier = Barrier(self)
-            newBarrier.y = 25
-            newBarrier.x = i * 50
-            self.barriers.append(newBarrier)
-        for i in range(13):
+            newBarrier.y = 5
+            newBarrier.x = i * 10
+            self.barriersT.append(newBarrier)
+            
+        for i in range(6):
             newBarrier = Barrier(self)
-            newBarrier.y = 455
-            newBarrier.x = i * 50
-            self.barriers.append(newBarrier)
-        for i in range(13):
+            newBarrier.y = 200
+            newBarrier.x = 250 + i * 10
+            self.barriersT.append(newBarrier)
+            
+        for i in range(65):
             newBarrier = Barrier(self)
-            newBarrier.y = i * 50
-            newBarrier.x = 25
-            self.barriers.append(newBarrier)
-        for i in range(13):
+            newBarrier.y = 475
+            newBarrier.x = i * 10
+            self.barriersB.append(newBarrier)
+        for i in range(6):
             newBarrier = Barrier(self)
-            newBarrier.y = i * 50
-            newBarrier.x = 615
-            self.barriers.append(newBarrier)"""
-        newBarrier = Barrier(self)
-        newBarrier.colorRect("red", (400, 50))
-        newBarrier.y = 200
-        newBarrier.x = 300
-        self.barriers.append(newBarrier)
-    
-        self.lblOut = LblOut()
+            newBarrier.y = 270
+            newBarrier.x = 350 + i * 10
+            self.barriersB.append(newBarrier)
+        
+        for i in range(65):
+            newBarrier = Barrier(self)
+            newBarrier.y = i * 10
+            newBarrier.x = 5
+            self.barriersL.append(newBarrier)
+            
+        for i in range(20):
+            newBarrier = Barrier(self)
+            newBarrier.y = i * 10
+            newBarrier.x = 300
+            self.barriersL.append(newBarrier)
+                
+        for i in range(65):
+            newBarrier = Barrier(self)
+            newBarrier.y = i * 10
+            newBarrier.x = 635
+            self.barriersR.append(newBarrier)
+        for i in range(20):
+            newBarrier = Barrier(self)
+            newBarrier.y = i * 10
+            newBarrier.x = 250
+            self.barriersR.append(newBarrier)
+
+        for i in range(20):
+            newBarrier = Barrier(self)
+            newBarrier.y = 275 + i * 10
+            newBarrier.x = 400 
+            self.barriersR.append(newBarrier)
+        for i in range(20):
+            newBarrier = Barrier(self)
+            newBarrier.y = 275 + i * 10
+            newBarrier.x = 350
+            self.barriersR.append(newBarrier)
+
+
+
         self.sprites = [
             self.tank1, self.bullet1, self.tank2, 
-            self.bullet2, self.barriers, self.tank1.lblScore, 
-            self.tank2.lblScore, self.LblOut
+            self.bullet2, self.barriersL, self.barriersR, self.barriersT, self.barriersB, self.tank1.lblScore, 
+            self.tank2.lblScore
             ]
         
         
@@ -235,7 +250,7 @@ class Game(simpleGE.Scene):
 class Barrier(simpleGE.Sprite):
     def __init__(self, scene):
         super().__init__(scene)
-        self.colorRect("yellow", (50, 50))
+        self.colorRect("yellow", (10, 10))
         
 
 
