@@ -211,7 +211,7 @@ class Game(simpleGE.Scene):
             newBarrier = Barrier(self)
             newBarrier.y = 275 + i * 10
             newBarrier.x = 400 
-            self.barriersR.append(newBarrier)
+            self.barriersL.append(newBarrier)
         for i in range(20):
             newBarrier = Barrier(self)
             newBarrier.y = 275 + i * 10
