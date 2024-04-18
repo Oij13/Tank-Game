@@ -7,7 +7,7 @@ Created on Fri Apr 12 10:33:38 2024
 @author: owen.johnson3
 """
 
-import pygame, simpleGE
+import pygame, simpleGE, random
 
 class Tank(simpleGE.Sprite):
     def __init__(self, scene):
@@ -237,17 +237,17 @@ class Game(simpleGE.Scene):
         
     def process(self):
         if self.tank2.isKeyPressed(pygame.K_j):
-            self.tank2.turnBy(3)
+            self.tank2.turnBy(4)
         if self.tank2.isKeyPressed(pygame.K_l):
-            self.tank2.turnBy(-3)
+            self.tank2.turnBy(-4)
         if self.tank2.isKeyPressed(pygame.K_i):
             self.tank2.forward(-3)
 
             
         if self.tank1.isKeyPressed(pygame.K_a):
-            self.tank1.turnBy(3)
+            self.tank1.turnBy(4)
         if self.tank1.isKeyPressed(pygame.K_d):
-            self.tank1.turnBy(-3)
+            self.tank1.turnBy(-4)
         if self.tank1.isKeyPressed(pygame.K_w):
             self.tank1.forward(3)
 
@@ -258,6 +258,19 @@ class Game(simpleGE.Scene):
             self.tank1.score += 1
             self.bullet1.hide
             self.tank1.lblScore.text = f"Score (p1): {self.tank1.score}"
+            if self.tank1.x < 325:
+
+                self.tank2.x = random.randint(400, 640)
+                self.tank2.y = random.randint(0, 640)
+                self.tank2.hide()
+                self.tank2.show()
+            elif self.tank1.x > 325:
+
+                self.tank2.x = random.randint(0, 250)
+                self.tank2.y = random.randint(0, 640)
+                self.tank2.hide()
+                self.tank2.show()
+            
 
 
         if self.bullet2.collidesWith(self.tank1):
@@ -265,7 +278,19 @@ class Game(simpleGE.Scene):
             self.tank2.score += 1
             self.bullet2.hide
             self.tank2.lblScore.text = f"Score (p2): {self.tank2.score}"
-
+            if self.tank2.x < 320:
+                self.tank1.x = random.randint(400, 640)
+                self.tank1.y = random.randint(0, 640)
+                self.tank1.hide()
+                self.tank1.show()
+            elif self.tank2.x > 320:
+                self.tank1.x = random.randint(0, 250)
+                self.tank1.y = random.randint(0, 640)
+                self.tank1.hide()
+                self.tank1.show()
+            
+            
+ 
 
 class Barrier(simpleGE.Sprite):
     def __init__(self, scene):
@@ -274,17 +299,64 @@ class Barrier(simpleGE.Sprite):
         
 
 
+class Instruction(simpleGE.Scene):
+    def __init__(self):
+        super().__init__()
 
+        self.setImage("rockBG.png")
+        self.directions = simpleGE.MultiLabel()
+        self.directions.textLines = [
+        "Player 1: WASD (move) F (shoot)",
+        "Player 2: IJKL (move) H (shoot)",
+        "Hit the other player to win the round",]
+        
+        self.directions.center = (320, 240)
+        self.directions.size = (500, 250)
+        
+        self.btnPlay = simpleGE.Button()
+        self.btnPlay.text = "Play"
+        self.btnPlay.center = (100, 400)
+        
+        self.btnQuit = simpleGE.Button()
+        self.btnQuit.text = "Quit"
+        self.btnQuit.center = (540, 400)
+        
 
+        
 
+        
+        
+        self.sprites = [self.directions,
+                        self.btnPlay,
+                        self.btnQuit,
+                        ]
+        
+        
+    def process(self):
+        if self.btnPlay.clicked:
+            self.response = "Play"
+            self.stop()
+            
+        if self.btnQuit.clicked:
+            self.response = "Quit"
+            self.stop()
 
 
 
 
 
 def main():
-    game = Game()
-    game.start()
+    keepGoing = True
 
-    
+    while keepGoing:
+        
+        instructions = Instruction()
+        
+        instructions.start()
+        if instructions.response == "Play":
+            game = Game()
+            game.start()
+
+        else:
+            keepGoing = False
 main()
