@@ -275,7 +275,7 @@ class Game(simpleGE.Scene):
 
 
         if self.bullet2.collidesWith(self.tank1):
-            self.bullet2.reset()            
+            self.bullet1.reset()            
             self.bullet2.show()
             self.tank2.score += 1
             self.bullet2.hide
