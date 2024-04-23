@@ -151,7 +151,7 @@ class Game(simpleGE.Scene):
         
         self.setImage("RockBG.png")
         
-        self.sndFire = simpleGE.Sound("laserShoot.wav")
+
         self.sndHit = simpleGE.Sound("explosion.wav")
         
         self.tank2 = Tank(self)
