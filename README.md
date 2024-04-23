@@ -29,7 +29,7 @@ Game Over:
 
 
 ## Sprites:
-    Player1:
+  Player1:
 - User-controlled green tank sprite
 - Rotate tank with A and D
 - Move forward with W
@@ -38,7 +38,7 @@ Game Over:
 - Cant pass through outer barrier or cover barriers
 - Starts on left screen
 
-    Player2:
+  Player2:
 - User-controlled red tank sprite
 - Rotate tank with J and L
 - Move forward with I
@@ -46,20 +46,20 @@ Game Over:
 - Cant pass through outer barrier or cover barriers
 - Starts on right screen
 
-    Bullets:
+  Bullets:
 - Shoots in direction of barrel on either tank sprite
 - if bullet on one player hits other player while their bullet is in motion, it resets the hit players bullet as well
       - Gets rid of simultaneous hits
 - Sound effects from firing of bullet and colliding of bullet
 
-   Barriers:
+  Barriers:
 - Stops bullets
 - Stops tank movement
 - Keeps sprites from moving off the screen or through cover barriers
 - Placed in predetermined locations
 - Moves tank sprites to keep from going through barriers
 
-    Player win screen:
+  Player win screen:
 - Shows "Player [winner] Wins!" in text box
 - Play again button (starts from Game Play screen)
 - Quit button (goes to home screen)
