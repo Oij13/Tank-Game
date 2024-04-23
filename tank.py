@@ -57,6 +57,8 @@ class Bullet1(simpleGE.Sprite):
         self.parent = parent
         self.setImage("Bullet.png")
         self.setSize(5,5)
+        self.sndFire = simpleGE.Sound("laserShoot.wav")
+
         self.setBoundAction(self.HIDE)
         self.hide()
 
@@ -66,6 +68,7 @@ class Bullet1(simpleGE.Sprite):
             self.position = self.parent.position
             self.moveAngle = self.parent.imageAngle
             self.speed = 20
+            self.sndFire.play()
     def process(self):
         for barrier in self.scene.barriersT:
             if self.collidesWith(barrier):
@@ -94,6 +97,8 @@ class Bullet2(simpleGE.Sprite):
         self.parent = parent
         self.setImage("Bullet.png")
         self.setSize(5,5)
+        self.sndFire = simpleGE.Sound("laserShoot.wav")
+
         self.setBoundAction(self.HIDE)
         self.hide()
 
@@ -103,6 +108,7 @@ class Bullet2(simpleGE.Sprite):
             self.position = self.parent.position
             self.moveAngle = self.parent.imageAngle
             self.speed = -20
+            self.sndFire.play()
     def process(self):
         for barrier in self.scene.barriersT:
             if self.collidesWith(barrier):
@@ -145,8 +151,10 @@ class Game(simpleGE.Scene):
         
         self.setImage("RockBG.png")
         
+        self.sndFire = simpleGE.Sound("laserShoot.wav")
+        self.sndHit = simpleGE.Sound("explosion.wav")
+        
         self.tank2 = Tank(self)
-        #self.tank2.setAngle(180)
         self.tank2.setImage("Redtank.png")
         self.tank2.position = (565,250)
         self.tank2.score = 0
@@ -230,10 +238,12 @@ class Game(simpleGE.Scene):
     def processEvent(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_f:
-                self.bullet1.fire()        
+                self.bullet1.fire()
+
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_h:
-                self.bullet2.fire()    
+                self.bullet2.fire() 
+
         
     def process(self):
         if self.tank2.isKeyPressed(pygame.K_j):
@@ -257,7 +267,8 @@ class Game(simpleGE.Scene):
             self.bullet2.reset()
             self.bullet1.show()
             self.tank1.score += 1
-            self.bullet1.hide
+            self.bullet1.hide()
+            self.sndHit.play()
             self.tank1.lblScore.text = f"Score (p1): {self.tank1.score}"
             if self.tank1.x < 325:
 
@@ -279,6 +290,7 @@ class Game(simpleGE.Scene):
             self.bullet2.show()
             self.tank2.score += 1
             self.bullet2.hide
+            self.sndHit.play()
             self.tank2.lblScore.text = f"Score (p2): {self.tank2.score}"
             if self.tank2.x < 320:
                 self.tank1.x = random.randint(400, 640)
