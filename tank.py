@@ -291,8 +291,14 @@ class Game(simpleGE.Scene):
                 self.tank1.hide()
                 self.tank1.show()
             
-            
- 
+        if self.tank1.score == 10:
+            winner1 = Win1()
+            winner1.start()
+            self.stop()
+        if self.tank2.score == 10:
+            winner2 = Win2()
+            winner2.start()
+            self.stop()
 
 class Barrier(simpleGE.Sprite):
     def __init__(self, scene):
@@ -316,11 +322,11 @@ class Instruction(simpleGE.Scene):
         self.directions.size = (500, 250)
         
         self.btnPlay = simpleGE.Button()
-        self.btnPlay.text = "Play"
+        self.btnPlay.text = "Play (w)"
         self.btnPlay.center = (100, 400)
         
         self.btnQuit = simpleGE.Button()
-        self.btnQuit.text = "Quit"
+        self.btnQuit.text = "Quit (q)"
         self.btnQuit.center = (540, 400)
         
 
@@ -335,18 +341,79 @@ class Instruction(simpleGE.Scene):
         
         
     def process(self):
-        if self.btnPlay.clicked:
+        if self.isKeyPressed(pygame.K_w) or self.btnPlay.clicked:
             self.response = "Play"
             self.stop()
             
-        if self.btnQuit.clicked:
+        if self.btnQuit.clicked or self.isKeyPressed(pygame.K_q):
             self.response = "Quit"
             self.stop()
 
+class Win1(simpleGE.Scene):
+    def __init__(self):
+        super().__init__()
+        
+        self.winner = simpleGE.MultiLabel()
+        self.winner.textLines = [
+            "Player 1 wins!",
+            "Player 2 loses!"]
+        self.winner.center = (320,240)
+        self.winner.size = (250, 150)
+        
+        self.btnPlay = simpleGE.Button()
+        self.btnPlay.text = "Play (w)"
+        self.btnPlay.center = (100, 400)
+        
+        self.btnQuit = simpleGE.Button()
+        self.btnQuit.text = "Quit (q)"
+        self.btnQuit.center = (540, 400)
+        
+        self.sprites = [self.winner,
+                        self.btnPlay,
+                        self.btnQuit,
+                        ]
+    def process(self):
+        if self.isKeyPressed(pygame.K_w) or self.btnPlay.clicked:
+            game = Game()
+            game.start()
+            self.stop()
+            
+        if self.btnQuit.clicked or self.isKeyPressed(pygame.K_q):
+            self.response = "Quit"
+            self.stop()
 
-
-
-
+class Win2(simpleGE.Scene):
+    def __init__(self):
+        super().__init__()
+        
+        self.winner = simpleGE.MultiLabel()
+        self.winner.textLines = [
+            "Player 2 wins!",
+            "Player 1 loses!"]
+        self.winner.center = (320,240)
+        self.winner.size = (250, 150)
+        
+        self.btnPlay = simpleGE.Button()
+        self.btnPlay.text = "Play (w)"
+        self.btnPlay.center = (100, 400)
+        
+        self.btnQuit = simpleGE.Button()
+        self.btnQuit.text = "Quit (q)"
+        self.btnQuit.center = (540, 400)
+        
+        self.sprites = [self.winner,
+                        self.btnPlay,
+                        self.btnQuit,
+                        ]
+    def process(self):
+        if self.isKeyPressed(pygame.K_w) or self.btnPlay.clicked:
+            self.response = "Play"
+            self.stop()
+            
+        if self.btnQuit.clicked or self.isKeyPressed(pygame.K_q):
+            self.response = "Quit"
+            self.stop()
+            
 def main():
     keepGoing = True
 
@@ -361,4 +428,5 @@ def main():
 
         else:
             keepGoing = False
-main()
+if __name__ == "__main__":
+    main()
