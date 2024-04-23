@@ -4,54 +4,66 @@ You and a friend fight in an arena to the best of 3! Player 1 uses WASD to move 
 
 Game States:
 
-Intro Screen:
-- Show Instructions
-- Start Button
-- Quit Button
+## Intro Screen:
+![Screenshot 2024-04-23 111952](https://github.com/Oij13/Tank-Game/assets/156932008/232f0378-cff2-41ec-b2d7-741ea41ade4a)
 
-GamePlay:
-- Show map chosen predetermined
+- Show Instructions
+- Start Button (Start game)
+- Quit Button (Exit game)
+
+## Game Play:
+![Screenshot 2024-04-23 112430](https://github.com/Oij13/Tank-Game/assets/156932008/cecee3c8-b94a-47b2-b63c-7c7770c1833b)
+
+- Show predetermined map
 - Give each user a score of 0
 - Every hit to the other player increases the other's score by one
-- First to 10 points wins
+- Each hit moves hit player to opposite side of the screen from attacker
+- First to 10 points wins (shows winner screen when player hits 10 points)
 
-GameOver:
+Game Over:
 - Declares winner
-- Shows play again btn (taken back to map selection)
+- Shows play again btn (starts game over)
 - Quit button shown
 
-Quit:
-- Quits game
 
 
 
-Sprites:
+## Sprites:
     Player1:
-- User-controlled Sprite
+- User-controlled green tank sprite
 - Rotate tank with A and D
 - Move forward with W
 - Backwards in facing direction with S
-- Shoots with C
+- Shoots with F in the directions the barrel is facing
 - Cant pass through outer barrier or cover barriers
 - Starts on left screen
-- Has 3 hit points
 
     Player2:
-- User-controlled Sprite
+- User-controlled red tank sprite
 - Rotate tank with J and L
 - Move forward with I
-- Backwards in facing direction with K
-- Shoots with SPACE
+- Shoots with H in the direction the barrel is facing
 - Cant pass through outer barrier or cover barriers
 - Starts on right screen
-- Has 3 hit points
 
-    Cover Barrier:
+    Bullets:
+- Shoots in direction of barrel on either tank sprite
+- if bullet on one player hits other player while their bullet is in motion, it resets the hit players bullet as well
+      - Gets rid of simultaneous hits
+- Sound effects from firing of bullet and colliding of bullet
+
+   Barriers:
 - Stops bullets
 - Stops tank movement
+- Keeps sprites from moving off the screen or through cover barriers
 - Placed in predetermined locations
-- Will change locations based on user map choice
-- 
+- Moves tank sprites to keep from going through barriers
+
+    Player win screen:
+- Shows "Player [winner] Wins!" in text box
+- Play again button (starts from Game Play screen)
+- Quit button (goes to home screen)
+    
 
 
 
