@@ -5,14 +5,15 @@ You and a friend fight in an arena to the best of 3! Player 1 uses WASD to move 
 Game States:
 
 Intro Screen:
-- Show Title
-- 2 choices of maps to battle on
+- Show Instructions
+- Start Button
 - Quit Button
 
 GamePlay:
-- Show map chosen by user
-- Give each user 3 hit points
-- Start game after 3 seconds
+- Show map chosen predetermined
+- Give each user a score of 0
+- Every hit to the other player increases the other's score by one
+- First to 10 points wins
 
 GameOver:
 - Declares winner
