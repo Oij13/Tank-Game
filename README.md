@@ -63,7 +63,22 @@ Game Over:
 - Shows "Player [winner] Wins!" in text box
 - Play again button (starts from Game Play screen)
 - Quit button (goes to home screen)
-    
+
+## UI Components
+- Background
+      - Rocky
+      - Contrasts well with tanks and barriers
+- LblScore
+      - Adds a score for each tank
+      - Adds by one for each hit on the opposing tank
+      -
+- LblStart
+      - Starts game when clicked
+      - Appears on title screen and win screen
+- LblQuit
+      - Quit the entire game when clicked
+      - Appears on title screen and win screen
+  
 
 
 
