@@ -25,7 +25,12 @@ Game Over:
 - Shows play again btn (starts game over)
 - Quit button shown
 
+  Player win screen:
+- Shows "Player [winner] Wins!" in text box
+- Play again button (starts from Game Play screen)
+- Quit button (goes to home screen)
 
+  
 
 
 ## Sprites:
