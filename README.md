@@ -18,7 +18,7 @@ Game States:
 - Give each user a score of 0
 - Every hit to the other player increases the other's score by one
 - Each hit moves hit player to opposite side of the screen from attacker
-- First to 10 points wins (shows winner screen when player hits 10 points)
+- First to 3 points wins (shows winner screen when player hits 3 points)
 
 Game Over:
 - Declares winner
