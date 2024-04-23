@@ -291,11 +291,11 @@ class Game(simpleGE.Scene):
                 self.tank1.hide()
                 self.tank1.show()
             
-        if self.tank1.score == 10:
+        if self.tank1.score == 1:
             winner1 = Win1()
             winner1.start()
             self.stop()
-        if self.tank2.score == 10:
+        if self.tank2.score == 1:
             winner2 = Win2()
             winner2.start()
             self.stop()
@@ -379,7 +379,7 @@ class Win1(simpleGE.Scene):
             self.stop()
             
         if self.btnQuit.clicked or self.isKeyPressed(pygame.K_q):
-            self.response = "Quit"
+
             self.stop()
 
 class Win2(simpleGE.Scene):
@@ -394,11 +394,11 @@ class Win2(simpleGE.Scene):
         self.winner.size = (250, 150)
         
         self.btnPlay = simpleGE.Button()
-        self.btnPlay.text = "Play (w)"
+        self.btnPlay.text = "Play (i)"
         self.btnPlay.center = (100, 400)
         
         self.btnQuit = simpleGE.Button()
-        self.btnQuit.text = "Quit (q)"
+        self.btnQuit.text = "Quit (o)"
         self.btnQuit.center = (540, 400)
         
         self.sprites = [self.winner,
@@ -406,12 +406,13 @@ class Win2(simpleGE.Scene):
                         self.btnQuit,
                         ]
     def process(self):
-        if self.isKeyPressed(pygame.K_w) or self.btnPlay.clicked:
-            self.response = "Play"
+        if self.isKeyPressed(pygame.K_i) or self.btnPlay.clicked:
+            game = Game()
+            game.start()
             self.stop()
             
-        if self.btnQuit.clicked or self.isKeyPressed(pygame.K_q):
-            self.response = "Quit"
+        if self.btnQuit.clicked or self.isKeyPressed(pygame.K_o):
+
             self.stop()
             
 def main():
