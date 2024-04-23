@@ -291,11 +291,11 @@ class Game(simpleGE.Scene):
                 self.tank1.hide()
                 self.tank1.show()
             
-        if self.tank1.score == 1:
+        if self.tank1.score == 3:
             winner1 = Win1()
             winner1.start()
             self.stop()
-        if self.tank2.score == 1:
+        if self.tank2.score == 3:
             winner2 = Win2()
             winner2.start()
             self.stop()
@@ -316,7 +316,7 @@ class Instruction(simpleGE.Scene):
         self.directions.textLines = [
         "Player 1: WASD (move) F (shoot)",
         "Player 2: IJKL (move) H (shoot)",
-        "Hit the other player to win the round",]
+        "First to 3 wins the round!",]
         
         self.directions.center = (320, 240)
         self.directions.size = (500, 250)
@@ -379,7 +379,7 @@ class Win1(simpleGE.Scene):
             self.stop()
             
         if self.btnQuit.clicked or self.isKeyPressed(pygame.K_q):
-
+            self.response = "Quit"
             self.stop()
 
 class Win2(simpleGE.Scene):
@@ -412,7 +412,7 @@ class Win2(simpleGE.Scene):
             self.stop()
             
         if self.btnQuit.clicked or self.isKeyPressed(pygame.K_o):
-
+            self.response = "Quit"
             self.stop()
             
 def main():
