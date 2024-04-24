@@ -104,8 +104,9 @@ Game Over:
 - “OpenGameArt.org.” OpenGameArt.org, 2024, opengameart.org/. Accessed 24 Apr. 2024. (Used for all of the graphics and sprites)
 
 ## My Process
+
 I learned that such a simple looking game on the outside can be very challenging and complex to make
-- 
+* It makes you appreciate how hard people work on games and how complex their code must be 
 
 I got stuck when trying to create barriers
 - It is difficult to check the angle of the tank sprite while colliding with a barrier
