@@ -83,7 +83,55 @@ Game Over:
 - LblQuit
       - Quit the entire game when clicked
       - Appears on title screen and win screen
-  
+
+
+
+
+# Reflection
+
+## Goals
+- To create a simple yet elegant 2d tank game
+- Figure out how to code barriers
+- Gain a better understanding for the SimpleGE game engine
+- Make a game compatible with the class arcade machine
+
+## Technologies and techniques used
+- Referenced professor's code in multiple instances such as bullet behaviors and creating working sprites and barriers
+- SimpleGE and Pygame
+
+## Citations
+- “Jsfxr.” Jsfxr, 2024, sfxr.me/. Accessed 24 Apr. 2024.  (Used for sound effects of tanks)
+- “OpenGameArt.org.” OpenGameArt.org, 2024, opengameart.org/. Accessed 24 Apr. 2024. (Used for all of the graphics and sprites)
+
+## My Process
+I learned that such a simple looking game on the outside can be very challenging and complex to make
+- 
+
+I got stuck when trying to create barriers
+- It is difficult to check the angle of the tank sprite while colliding with a barrier
+- Any angle outside of a 45 degree span of a direction would confuse the collision point of the barrier
+- Solution: Create 4 different barrier sprites to isolate the collision checking for the sprite
+    - Each barrier side will only check one side for collision, giving a whole 180 degree angle for the tank to collide with
+ 
+I would like to decorate the home screen and win screens a bit
+- Plain black with white buttons
+- Could be more decorative
+
+I would take more breaks while coding
+- A lot of the struggle in coding barriers came from overthinking about the problem
+- Breaks would allow me to think in much more simple terms to help me solve the problem
+
+I did not allow for a custom map selection in my final product
+- My original game document called for that
+- Put much more focus on mechanics than bells and whistles
+
+Each class period I would have at least one new feature added to my game
+- This allowed me to stay on track and complete my game on a good timeline
+- One week would be focused on sprites and another focused on barriers, for example
+
+
+
+‌
 
 
 
